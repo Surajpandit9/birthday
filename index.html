@@ -145,7 +145,7 @@ function detect(){
 analyser.getByteFrequencyData(dataArray);
 let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
 
-if(volume>55){
+if(volume>35){
 blowOut();
 }
 
