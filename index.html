@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Beauty Dii</title>
+
+<style>
+body{
+margin:0;
+text-align:center;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+overflow:hidden;
+color:white;
+}
+
+.container{
+margin-top:80px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff4081;
+font-weight:bold;
+cursor:pointer;
+}
+
+.photo{
+display:none;
+width:200px;
+height:200px;
+border-radius:50%;
+margin-top:30px;
+border:6px solid white;
+object-fit:cover;
+box-shadow:0 0 30px white;
+animation:zoomIn 1.5s ease forwards;
+}
+
+@keyframes zoomIn{
+from{transform:scale(0);}
+to{transform:scale(1);}
+}
+
+.name{
+display:none;
+font-size:42px;
+font-weight:bold;
+margin-top:20px;
+font-family:cursive;
+animation:glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px white;}
+to{text-shadow:0 0 30px yellow;}
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+animation:fall 3s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100px) rotate(0);}
+100%{transform:translateY(100vh) rotate(360deg);}
+}
+
+.balloon{
+position:absolute;
+bottom:-100px;
+width:40px;
+height:60px;
+background:red;
+border-radius:50%;
+animation:rise 6s linear infinite;
+}
+
+@keyframes rise{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<button onclick="celebrate()">🎉 Click To Celebrate 🎉</button>
+
+<img src="beauty.jpg" class="photo" id="photo">
+<div class="name" id="name">
+Happy Birthday Beauty Dii 💖
+</div>
+</div>
+
+<<audio id="music" src="birthday.mp3"></audio>
+<script>
+
+function celebrate(){
+
+document.getElementById("music").play();
+
+document.getElementById("photo").style.display="block";
+document.getElementById("name").style.display="block";
+
+createConfetti();
+createBalloons();
+}
+
+function createConfetti(){
+for(let i=0;i<150;i++){
+let conf=document.createElement("div");
+conf.className="confetti";
+conf.style.left=Math.random()*100+"vw";
+conf.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+conf.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(conf);
+}
+}
+
+function createBalloons(){
+for(let i=0;i<20;i++){
+let balloon=document.createElement("div");
+balloon.className="balloon";
+balloon.style.left=Math.random()*100+"vw";
+balloon.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+balloon.style.animationDuration=(Math.random()*5+5)+"s";
+document.body.appendChild(balloon);
+}
+}
+
+</script>
+
+</body>
+</html>
