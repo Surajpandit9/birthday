@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Beauty Dii</title>
+
+<style>
+body{
+margin:0;
+text-align:center;
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+color:white;
+background:black;
+}
+
+.bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url('beauty.jpg') no-repeat center center/cover;
+filter:blur(5px) brightness(0.6);
+z-index:-1;
+}
+
+h1{
+margin-top:30px;
+font-size:28px;
+}
+
+.name{
+font-size:38px;
+font-weight:bold;
+animation:glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px pink;}
+to{text-shadow:0 0 30px yellow;}
+}
+
+.photo{
+width:180px;
+height:180px;
+border-radius:50%;
+margin-top:20px;
+border:5px solid white;
+object-fit:cover;
+box-shadow:0 0 20px white;
+}
+
+.cake{
+font-size:120px;
+margin-top:30px;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+}
+
+.candle{
+font-size:60px;
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+font-size:18px;
+background:white;
+border:none;
+border-radius:30px;
+color:#ff4081;
+font-weight:bold;
+}
+
+#message{
+display:none;
+margin-top:20px;
+font-size:20px;
+animation:fade 2s ease-in-out;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+animation:fall 3s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100px) rotate(0);}
+100%{transform:translateY(100vh) rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<h1>🎉 Happy Birthday 🎉</h1>
+<div class="name">Beauty Dii 💖</div>
+
+<img src="beauty.jpg" class="photo">
+
+<div class="cake">🎂</div>
+<div class="candle" id="candle">🕯️</div>
+
+<button onclick="startMic()">Start Celebration</button>
+
+<div id="message">
+💖 Stay happy always Beauty Dii 💖 <br>
+✨ May your life shine brighter than this candle ✨
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<script>
+
+function startMic(){
+
+document.getElementById("music").play();
+
+navigator.mediaDevices.getUserMedia({ audio: true })
+.then(function(stream){
+
+const audioContext=new(window.AudioContext||window.webkitAudioContext)();
+const analyser=audioContext.createAnalyser();
+const microphone=audioContext.createMediaStreamSource(stream);
+const dataArray=new Uint8Array(analyser.frequencyBinCount);
+
+microphone.connect(analyser);
+
+function detect(){
+analyser.getByteFrequencyData(dataArray);
+let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
+
+if(volume>55){
+blowOut();
+}
+
+requestAnimationFrame(detect);
+}
+
+detect();
+});
+}
+
+function blowOut(){
+document.getElementById("candle").innerHTML="💨";
+document.getElementById("message").style.display="block";
+createConfetti();
+}
+
+function createConfetti(){
+for(let i=0;i<120;i++){
+let conf=document.createElement("div");
+conf.className="confetti";
+conf.style.left=Math.random()*100+"vw";
+conf.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+conf.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(conf);
+}
+}
+
+</script>
+
+</body>
+</html>
